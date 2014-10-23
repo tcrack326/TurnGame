@@ -9,18 +9,31 @@ body {
   color: #333;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 600px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
+.header{
+  position: fixed;
+  background-color: gray;
+  top: 0;
+  left: 0;
+  text-align: center;
+  height: 2.4em;
+  width: 100%;
+
   h1 {
-    font-size: 60px;
+    font-size: 2em;
     line-height: 1;
     letter-spacing: -1px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
   }
+}
+
+.container {
+  position: absolute;
+  top: 2em;
+}
+
+span {
+  display: block;
+  padding: .5em;
 }

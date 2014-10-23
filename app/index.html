@@ -22,20 +22,76 @@
     <!-- endbuild -->
   </head>
   <body>
-
-    <div class="hero-unit">
-      <h1>'Allo, 'Allo!</h1>
-      <p>You now have</p>
-      <ul>
-        <li>HTML5 Boilerplate</li>
-        <li>Normalize CSS</li>
-        <li>Sass</li>
-        <li>Modernizr</li>
-        <li>Bourbon & Neat</li>
-        <li>UnderscoreJS</li>
-      </ul>
-      <p>Don't forget to update your readme file!!</p>
+    <div class="header">
+      <h1>Iron Yard Warriors</h1>
     </div>
+    <div class="container">
+      <section id="startScreen">
+        <h2>Choose up to three existing Iron Yard Warriors or Create your own to begin your Quest!</h2>
+        <h3>Create an Iron Yard Warrior</h3>
+        <div>
+          <span>Enter your Warrior's Name</span>
+          <input id="name" type="text">
+        </div>
+        <div>
+          <span>Choose a Race</span>
+          <input id="userRace" list="race" autocomplete="on">
+            <datalist id="race">
+              <option value="Man">
+              <option value="Elf">
+              <option value="Dwarf">
+            </datalist>
+        </div>
+        <div>
+          <span>Choose a Class</span>
+          <input id="userClass" list="class" autocomplete="on">
+            <datalist id="class">
+              <option value="Knight">
+              <option value="Ranger">
+              <option value="Thief">
+              <option value="Light Wizard">
+              <option value="Dark Wizard">
+              <option value="Rogue">
+            </datalist>
+        </div>
+        <div><span>Choose a Gender</span>
+          <input id="userGender" list="gender" autocomplete="on">
+          <datalist id="gender">
+            <option value="male">
+            <option value="female">
+          </datalist>
+        </div>
+        <br></br>
+        <button id="createBtn" name="createWarrior">Create New Warrior</button>
+        <br></br>
+        <button id="beginQuest" name="BeginQuest">Begin My Quest!</button>
+        <ul id="warriorList">
+        </ul>
+      </section>
+      <section id="gameScreen">
+      </section>
+  </div>
+  <!-- ========================== Templates ===================================
+  ========================================================================= -->
+  <script id="warriorListTemplate" type="text/template">
+    <li>
+      <div class="character">
+        <h3><%= name %></h3>
+        <h4><%= race %></h4>
+        <ul>
+          <li><span>Life: </span><%= life %></li>
+          <li><span>Magic: </span><%= magic %></li>
+          <li><span>Strength: </span><%= physicalAttack %></li>
+          <li><span>Defense: </span><%= physicalDefense %></li>
+          <li><span>Magic Strength: </span><%= magicalAttack %></li>
+          <li><span>Magic Defense: </span><%= magicalDefense %></li>
+          <li><span>Speed: </span><%= speed %></li>
+          <li><span>Spell Cast Speed:  </span><%= castSpeed %></li>
+          <li><span>Luck: </span><%= luck %></li>
+        </ul>
+      </div>
+    </li>
+  </script>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->

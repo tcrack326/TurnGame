@@ -1,3 +1,3 @@
-## Yo, I'm a Readme
+## Turn-based Game - Iron Yard Warriors
 
-You should probably update me so people looking at your code have an idea what it is being used for :)
+This is a turn-based game for Assignment 12 at the Iron Yard
