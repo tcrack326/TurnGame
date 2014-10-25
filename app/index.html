@@ -28,24 +28,22 @@
     <div class="container">
       <section id="startScreen">
         <h2>Choose up to three existing Iron Yard Warriors or Create your own to begin your Quest!</h2>
-        <h3>Create an Iron Yard Warrior</h3>
-        <div>
+        <div class="create">
+          <h3>Create an Iron Yard Warrior</h3>
           <span>Enter your Warrior's Name</span>
           <input id="name" type="text">
-        </div>
-        <div>
+
           <span>Choose a Race</span>
           <input id="userRace" list="race" autocomplete="on">
             <datalist id="race">
-              <option value="Man">
+              <option value="Human">
               <option value="Elf">
               <option value="Dwarf">
             </datalist>
-        </div>
-        <div>
+
           <span>Choose a Class</span>
-          <input id="userClass" list="class" autocomplete="on">
-            <datalist id="class">
+          <input id="userType" list="type" autocomplete="on">
+            <datalist id="type">
               <option value="Knight">
               <option value="Ranger">
               <option value="Thief">
@@ -53,44 +51,50 @@
               <option value="Dark Wizard">
               <option value="Rogue">
             </datalist>
-        </div>
-        <div><span>Choose a Gender</span>
-          <input id="userGender" list="gender" autocomplete="on">
+          <span>Choose a Gender</span>
+          <input id="userGender" list="gender" autocorrect="on">
           <datalist id="gender">
-            <option value="male">
-            <option value="female">
+            <option value="Male">
+            <option value="Female">
           </datalist>
+          <br></br>
+          <button id="createBtn" name="createWarrior">Create New Warrior</button>
+          <br></br>
+          <button id="beginQuest" name="BeginQuest">Begin My Quest!</button>
         </div>
-        <br></br>
-        <button id="createBtn" name="createWarrior">Create New Warrior</button>
-        <br></br>
-        <button id="beginQuest" name="BeginQuest">Begin My Quest!</button>
         <ul id="warriorList">
         </ul>
       </section>
       <section id="gameScreen">
-      </section>
+        <ul id="goodGuys">
+        </ul>
+        <ul id="badGuys">
+        </ul>
+    </section>
   </div>
   <!-- ========================== Templates ===================================
   ========================================================================= -->
   <script id="warriorListTemplate" type="text/template">
-    <li>
-      <div class="character">
+    <li class="character">
         <h3><%= name %></h3>
-        <h4><%= race %></h4>
+        <h4><%= race %> <%= type %></h4>
         <ul>
-          <li><span>Life: </span><%= life %></li>
-          <li><span>Magic: </span><%= magic %></li>
-          <li><span>Strength: </span><%= physicalAttack %></li>
-          <li><span>Defense: </span><%= physicalDefense %></li>
-          <li><span>Magic Strength: </span><%= magicalAttack %></li>
-          <li><span>Magic Defense: </span><%= magicalDefense %></li>
-          <li><span>Speed: </span><%= speed %></li>
-          <li><span>Spell Cast Speed:  </span><%= castSpeed %></li>
-          <li><span>Luck: </span><%= luck %></li>
+          <li>Life: <%= life %></li>
+          <li>Magic: <%= magic %></li>
+          <li>Strength: <%= physicalAttack %></li>
+          <li>Defense: <%= physicalDefense %></li>
+          <li>Magic Strength: <%= magicalAttack %></li>
+          <li>Magic Defense: <%= magicalDefense %></li>
+          <li>Speed: <%= speed %></li>
+          <li>Spell Cast Speed: <%= castSpeed %></li>
+          <li>Luck: <%= luck %></li>
         </ul>
-      </div>
     </li>
+  </script>
+  <script id="gameScreenTemplate" type="text/template">
+    <section id="gameScreen">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque voluptatem facilis obcaecati modi, illum cum esse. Sed tempore eligendi quos magnam blanditiis eaque odio, nobis quasi architecto! Eaque, itaque, at.</p>
+  </section>
   </script>
 
     <!-- build:js scripts/vendor.js -->
@@ -101,6 +105,7 @@
     <!-- endbuild -->
 
         <!-- build:js scripts/main.js -->
+        <script src="scripts/defaultPlayers.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 </body>

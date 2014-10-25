@@ -11,12 +11,14 @@ body {
 
 .header{
   position: fixed;
+  z-index: 3;
   background-color: gray;
   top: 0;
   left: 0;
   text-align: center;
   height: 2.4em;
   width: 100%;
+  min-width: 265px;
 
   h1 {
     font-size: 2em;
@@ -31,9 +33,74 @@ body {
 .container {
   position: absolute;
   top: 2em;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+section {
+  overflow: auto;
 }
 
 span {
   display: block;
   padding: .5em;
+}
+
+.create {
+  float: left;
+  width: 30%;
+  min-width: 265px;
+  margin: 5px;
+  border: 1px solid gray;
+  border-radius: 5%;
+  padding: 5px;
+
+  & > * {
+    width: 90%;
+  }
+
+}
+
+#warriorList {
+  float: left;
+  padding: 0;
+  margin: 5px;
+  width: 65%;
+}
+
+.character {
+  float:left;
+  list-style: none;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid gray;
+  border-radius: 5%;
+  max-width: 175px;
+
+  &:hover {
+    border:1px solid red;
+    cursor: pointer;
+  }
+
+  h3 {
+    margin-bottom: 0;
+  }
+
+  h4 {
+    margin: 0 0 .5em .5em;
+  }
+
+  ul {
+  list-style: none;
+  padding: 0;
+  }
+}
+
+#goodGuys {
+  float: left;
+}
+
+#badGuys {
+  float: right;
 }

@@ -1,14 +1,68 @@
 $(document).ready(function () {
+//arrays to hold available characters and characters selected for game
+var currentPlayers = [];
+var players = [];
+var enemies = [];
 
 //create player when clicked
-$('#createBtn').click( function(){
+$('#createBtn').click( function() {
+  if($('#name').val() === "" || $('#userType').val() === "" || $('#userRace').val() === "" || $('#userGender').val() === ""){
+    alert("Enter all values for your new character");
+  }
+  else {
   createPlayer();
+  //after creation get rid of the text in the inputs
+  $('#name').val('');
+  $('#userType').val('');
+  $('#userRace').val('');
+  $('#userGender').val('');
+}
 });
+
+//click the button to start quest and move to the game screen
+
+
+  $('#beginQuest').click( function() {
+    if (players.length === 0){
+      alert("You must select at least one player to do battle!");
+    }
+
+    else {
+      $('#startScreen').fadeOut(500, function() {
+
+        $('#gameScreen').fadeIn(500, function(){
+          players.forEach(function(player){
+            $('#goodGuys').append(warriorTemplateRenderer(player));
+          });
+          enemies.forEach(function(enemy){
+            $('#badGuys').append(warriorTemplateRenderer(enemy));
+          });
+        });
+      });
+    }
+  });
+
+  //select a character to battle with
+  $('#warriorList').on('click', ".character", function(){
+
+    var characterName = $(this).find("h3").text();
+    var selectedCharacter = _.findWhere(currentPlayers, {name: characterName});
+
+    if (_.contains(players,selectedCharacter)){
+      players = _.without(players, selectedCharacter);
+      $(this).css("border", "1px solid gray");
+    }
+    else{
+    players.push(selectedCharacter);
+    $(this).css("border", "3px solid black");
+    }
+  });
+
 
 //set up constructors for game
 var Player = function (options) {
   this.name = options.name || 'Hero';
-  this.class = options.class;
+  this.type = options.type;
   this.race = options.race;
   this.gender = options.gender || 'male';
   this.life = options.life || 100;
@@ -23,28 +77,134 @@ var Player = function (options) {
 };
 
 
+//default players for the game
+var defaultKnight = new Player({
+  name: "Eddard Stark",
+  type: "Knight",
+  race: "Human",
+  gender: "Male",
+  life: 80,
+  magic: 20,
+  physicalAttack: 60,
+  magicalAttack: 20,
+  physicalDefense: 70,
+  magicalDefense: 50,
+  speed: 70,
+  castSpeed: 30,
+  luck: 40
+});
 
-// var UserPlayer = function (name, race, gender) {
-//   Player.call(this, {name: name, race: race, gender: gender});
-//
-// };
+var defaultLightWizard = new Player({
+  name: "Zelda",
+  type: "Light Wizard",
+  race: "Elf",
+  gender: "Female",
+  life: 100,
+  magic: 100,
+  physicalAttack: 10,
+  magicalAttack: 60,
+  physicalDefense: 35,
+  magicalDefense: 80,
+  speed: 85,
+  castSpeed: 95,
+  luck: 60
+});
+
+var defaultDwarfDarkWizard = new Player({
+  name: "Willow",
+  type: "Dark Wizard",
+  race: "Dwarf",
+  gender: "Male",
+  life: 90,
+  magic: 90,
+  physicalAttack: 10,
+  magicalAttack: 90,
+  physicalDefense: 40,
+  magicalDefense: 90,
+  speed: 40,
+  castSpeed: 40,
+  luck: 50
+});
+
+var defaultThief = new Player({
+  name: "Anna",
+  type: "Thief",
+  race: "Human",
+  gender: "Female",
+  life: 75,
+  magic: 30,
+  physicalAttack: 40,
+  magicalAttack: 30,
+  physicalDefense: 30,
+  magicalDefense: 40,
+  speed: 90,
+  castSpeed: 60,
+  luck: 90
+});
+
+  currentPlayers.push(defaultKnight);
+  currentPlayers.push(defaultLightWizard);
+  currentPlayers.push(defaultDwarfDarkWizard);
+  currentPlayers.push(defaultThief);
+
+//let's create some enemies to battle with
+
+var goblin1 = new Player({
+  name: "Gribble Goblin",
+  type: "Fighter",
+  race: "Goblin",
+  gender: "Male",
+  life: 30,
+  magic: 30,
+  physicalAttack: 30,
+  magicalAttack: 10,
+  physicalDefense: 25,
+  magicalDefense: 10,
+  speed: 25,
+  castSpeed: 15,
+  luck: 10
+});
+var orc1 = new Player({
+  name: "Morc the Orc",
+  type: "Knight",
+  race: "Orc",
+  gender: "?",
+  life: 50,
+  magic: 10,
+  physicalAttack: 40,
+  magicalAttack: 10,
+  physicalDefense: 45,
+  magicalDefense: 10,
+  speed: 45,
+  castSpeed: 15,
+  luck: 20
+});
+
+var troll1 = new Player({
+  name: "Trouble Troll",
+  type: "Brawler",
+  race: "Troll",
+  gender: "?",
+  life: 80,
+  magic: 10,
+  physicalAttack: 10,
+  magicalAttack: 10,
+  physicalDefense: 75,
+  magicalDefense: 10,
+  speed: 15,
+  castSpeed: 15,
+  luck: 70
+});
 
 
-//create some basics players to test with - TOREMOVE LATER!!
-var player = new Player({ physicalAttack: 30, magicalAttack: 30, physicalDefense: 30, magicalDefense: 30, speed: 30, castSpeed: 30, luck: 30 });
-
-
-var opponent = new Player({ physicalAttack: 30, magicalAttack: 30, physicalDefense: 30, magicalDefense: 30, speed: 30, castSpeed: 30, luck: 30 });
-
-var currentPlayers = [];
-currentPlayers.push(player);
-currentPlayers.push(opponent);
-
+enemies.push(goblin1);
+enemies.push(orc1);
+enemies.push(troll1);
+/*============================================================================================
+=============================================================================================*/
 //create a template and the current players to it
 var warriorTemplate = $('#warriorListTemplate').html();
-console.log(warriorTemplate);
 var warriorTemplateRenderer = _.template(warriorTemplate);
-console.log(warriorTemplateRenderer);
 
 currentPlayers.forEach(function(player){
   $('#warriorList').append(warriorTemplateRenderer(player));
@@ -54,18 +214,18 @@ currentPlayers.forEach(function(player){
 
 var createPlayer = function() {
   userName = $('#name').val();
-  userClass = $('#userClass').val();
+  userType = $('#userType').val();
   userRace = $('#userRace').val();
   userGender = $('#userGender').val();
 
   var newPlayer;
 
-if (userRace === 'Man') {
-  switch (userClass){
+if (userRace === 'Human') {
+  switch (userType){
     case "Knight":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 80,
@@ -76,12 +236,12 @@ if (userRace === 'Man') {
         magicalDefense: 30,
         speed: 50,
         castSpeed: 10,
-        luck: 50});
+        luck: 40});
       break;
     case "Ranger":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 90,
@@ -97,7 +257,7 @@ if (userRace === 'Man') {
     case "Thief":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 75,
@@ -113,14 +273,14 @@ if (userRace === 'Man') {
     case "Light Wizard":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 80,
         magic: 80,
         physicalAttack: 10,
         magicalAttack: 50,
-        physicalDefense: 20,
+        physicalDefense: 50,
         magicalDefense: 90,
         speed: 50,
         castSpeed: 70,
@@ -129,7 +289,7 @@ if (userRace === 'Man') {
     case "Dark Wizard":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 70,
@@ -145,7 +305,7 @@ if (userRace === 'Man') {
     case "Rogue":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 80,
@@ -162,11 +322,11 @@ if (userRace === 'Man') {
 }
 
 else if (userRace === 'Elf') {
-  switch (userClass){
+  switch (userType){
     case "Knight":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 80,
@@ -182,7 +342,7 @@ else if (userRace === 'Elf') {
     case "Ranger":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 80,
@@ -198,7 +358,7 @@ else if (userRace === 'Elf') {
     case "Thief":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 75,
@@ -214,14 +374,14 @@ else if (userRace === 'Elf') {
     case "Light Wizard":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 100,
         magic: 100,
         physicalAttack: 10,
         magicalAttack: 60,
-        physicalDefense: 65,
+        physicalDefense: 35,
         magicalDefense: 80,
         speed: 85,
         castSpeed: 95,
@@ -230,7 +390,7 @@ else if (userRace === 'Elf') {
     case "Dark Wizard":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type:userType,
         race: userRace,
         gender: userGender,
         life: 90,
@@ -246,7 +406,7 @@ else if (userRace === 'Elf') {
     case "Rogue":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type:userType,
         race: userRace,
         gender: userGender,
         life: 80,
@@ -264,11 +424,11 @@ else if (userRace === 'Elf') {
 
 else {
   //race is dwarf
-  switch (userClass){
+  switch (userType){
     case "Knight":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 100,
@@ -284,7 +444,7 @@ else {
     case "Ranger":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 90,
@@ -300,7 +460,7 @@ else {
     case "Thief":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 55,
@@ -316,7 +476,7 @@ else {
     case "Light Wizard":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 100,
@@ -332,7 +492,7 @@ else {
     case "Dark Wizard":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 90,
@@ -348,7 +508,7 @@ else {
     case "Rogue":
       newPlayer = new Player({
         name: userName,
-        class:userClass,
+        type: userType,
         race: userRace,
         gender: userGender,
         life: 90,
@@ -366,6 +526,7 @@ else {
 
 currentPlayers.push(newPlayer);
 $('#warriorList').append(warriorTemplateRenderer(newPlayer));
+
 };
 
 /*==============================================================================
