@@ -14,6 +14,7 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
+    <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
@@ -26,15 +27,19 @@
       <h1>Iron Yard Warriors</h1>
     </div>
     <div class="container">
+      <section id="openingScreen">
+        <span>Click the Screen To Begin Your Quest</span>
+      </section>
       <section id="startScreen">
-        <h2>Choose up to three existing Iron Yard Warriors or Create your own to begin your Quest!</h2>
+        <h2>Choose up to four existing Iron Yard Warriors or Forge your own to begin your Quest!</h2>
+        <h3> Only Those Forged in the Fires of the Iron Yard shall Prevail!
         <div class="create">
           <h3>Create an Iron Yard Warrior</h3>
           <span>Enter your Warrior's Name</span>
           <input id="name" type="text">
 
           <span>Choose a Race</span>
-          <input id="userRace" list="race" autocomplete="on">
+          <input id="userRace" list="race" autocomplete="on" autocorrect="on">
             <datalist id="race">
               <option value="Human">
               <option value="Elf">
@@ -42,7 +47,7 @@
             </datalist>
 
           <span>Choose a Class</span>
-          <input id="userType" list="type" autocomplete="on">
+          <input id="userType" list="type" autocomplete="on" autocorrect="on">
             <datalist id="type">
               <option value="Knight">
               <option value="Ranger">
@@ -52,30 +57,25 @@
               <option value="Rogue">
             </datalist>
           <span>Choose a Gender</span>
-          <input id="userGender" list="gender" autocorrect="on">
+          <input id="userGender" list="gender" autocomplete="on" autocorrect="on">
           <datalist id="gender">
             <option value="Male">
             <option value="Female">
           </datalist>
           <br></br>
-          <button id="createBtn" name="createWarrior">Create New Warrior</button>
+          <div id="createBtn" name="createWarrior">Forge New Warrior</div>
           <br></br>
-          <button id="beginQuest" name="BeginQuest">Begin My Quest!</button>
+          <div id="beginQuest" name="BeginQuest">Begin My Quest!</div>
         </div>
         <ul id="warriorList">
         </ul>
       </section>
-      <section id="gameScreen">
-        <ul id="goodGuys">
-        </ul>
-        <ul id="badGuys">
-        </ul>
-    </section>
-  </div>
+    </div>
   <!-- ========================== Templates ===================================
   ========================================================================= -->
   <script id="warriorListTemplate" type="text/template">
     <li class="character">
+        <img src="<%= avatarUrl %>">
         <h3><%= name %></h3>
         <h4><%= race %> <%= type %></h4>
         <ul>
@@ -93,8 +93,11 @@
   </script>
   <script id="gameScreenTemplate" type="text/template">
     <section id="gameScreen">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque voluptatem facilis obcaecati modi, illum cum esse. Sed tempore eligendi quos magnam blanditiis eaque odio, nobis quasi architecto! Eaque, itaque, at.</p>
-  </section>
+      <ul id="goodGuys">
+      </ul>
+      <ul id="badGuys">
+      </ul>
+    </section>
   </script>
 
     <!-- build:js scripts/vendor.js -->
