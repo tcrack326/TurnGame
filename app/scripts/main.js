@@ -66,7 +66,7 @@ $('#warriorList').on('click', ".character", function(){
   //stop adding after four players added
   else if (players.length < 4){
     players.push(selectedCharacter);
-    $(this).css("border", "3px solid black");
+    $(this).css("border", "2px solid black");
   }
 });
 //========================================================================
@@ -558,6 +558,7 @@ var goblin1 = new Player({
   type: "Fighter",
   race: "Goblin",
   gender: "Male",
+  avatarUrl: "../images/monsters/goblin-01.png",
   life: 30,
   magic: 30,
   physicalAttack: 30,
@@ -573,6 +574,7 @@ var orc1 = new Player({
   type: "Knight",
   race: "Orc",
   gender: "?",
+  avatarUrl: "../images/monsters/orc-02.png",
   life: 50,
   magic: 10,
   physicalAttack: 40,
@@ -589,6 +591,7 @@ var troll1 = new Player({
   type: "Brawler",
   race: "Troll",
   gender: "?",
+  avatarUrl: "../images/monsters/troll-01.png",
   life: 80,
   magic: 10,
   physicalAttack: 10,
