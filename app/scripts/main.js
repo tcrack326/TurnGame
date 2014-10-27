@@ -601,7 +601,7 @@ else {
 }
 
 //Finally, set the avatar url based on the class, race, and gender chosen (and randomNumber based upon number of images available for each)
-var randomCharacterNumber = _.random(1,4).toString();
+var randomCharacterNumber = _.random(1,5).toString();
 
 //check to see if avatar url exists with random number to 5, if not, return one that exists
 var avatarUrl = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "0" + randomCharacterNumber + ".png";
