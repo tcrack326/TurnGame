@@ -158,23 +158,23 @@ span {
 #goodGuys {
   margin-top: 5em;
   float: left;
-  width: 40%;
+  width: 50%;
   padding: 0;
 
   li.character {
     float: left;
-    width: 30%;
+
   }
 }
 
 #badGuys {
   float: right;
   margin-top: 5em;
-  width: 40%;
+  width: 50%;
   padding: 0;
 
   li.character {
-    float: right;
+    float: left;
   }
 }
 
@@ -185,7 +185,7 @@ list-style: none;
 padding: 5px;
 margin: 5px 5px 10px 5px;
 border-radius: 5%;
-max-width: 175px;
+max-width: 240px;
 
 &:hover{
   cursor: pointer;
@@ -193,13 +193,15 @@ max-width: 175px;
 
 img {
   float: left;
-  width: 100%;
+  width: 65%;
   height: 12em;
 }
 
 h3 {
+  float: left;
   font-size: 10px;
 }
+
 
 }
 
@@ -224,7 +226,7 @@ h3 {
       transition: font-style 2s ease;
 
       &:hover {
-        font-size: 12px;
+        font-size: 10px;
         font-style: bold;
         cursor: pointer;
       }

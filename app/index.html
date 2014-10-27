@@ -142,10 +142,9 @@
     </section>
   </script>
   <script id="warriorGameTemplate" type="text/template">
-    <li class="characterGame">
+    <li class="characterGame" id="<%= name %><%= type %>">
         <img src="<%= avatarUrl %>">
         <h3><%= name %></h3>
-    </li>
     <div class="choices">
       <ul id= "<%= name %>">
         <li class="attackBtn">Attack</li>
@@ -154,14 +153,15 @@
         <li class="castSpellAllBtn">Cast Spell All</li>
       </ul>
     </div>
+    </li>
   </script>
   <script id="choiceBox" type="text/template">
     <div class="choices">
-      <ul>
-        <li id="attackBtn" onClick= <%= attack(enemies[0]) %> >Attack</li>
-        <li id="attackAllBtn">Attack All</li>
-        <li id="castSpellBtn">Cast Spell</li>
-        <li id="castSpellAllBtn">Cast Spell All</li>
+      <ul id= "<%= name %>">
+        <li class="attackBtn">Attack</li>
+        <li class="attackAllBtn">Attack All</li>
+        <li class="castSpellBtn">Cast Spell</li>
+        <li class="castSpellAllBtn">Cast Spell All</li>
       </ul>
     </div>
   </script>

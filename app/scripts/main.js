@@ -27,12 +27,24 @@ var Player = function (options) {
   this.speed = options.speed;
   this.castSpeed = options.castSpeed;
   this.luck = options.luck;
+  this.isAlive = true;
+  this.die = function(){
+    dead.push(this);
+    this.isAlive = false;
+    if ( dead.length > 2 ) {
+      $('#output').append("You won!!!");
+    }
+    else {
+    $('#output').text(this.name + " has been defeated!");
+  }
+    $("[id='" + this.name + this.type + "']").remove();
+  };
   this.attack = function(target) {
     //set up possible dodge
-    var odds = 600/ (target.luck + target.speed);
+    var odds = 600/ (target.luck + (target.speed/this.speed)*10);
     var random = _.random(1,odds);
     if(random <= 2.5 ) {
-      //dodged it! nothing else happens (need to give output for dodge somehow)
+      //dodged it! nothing else happens
       console.log("dodged");
       console.log(target);
       $('#output').text(this.name + " attacked " + target.name + " but he dodged it!");
@@ -43,9 +55,15 @@ var Player = function (options) {
       console.log(target.life);
       var damage = Math.round((this.physicalAttack / target.physicalDefense)*10);
       target.life = target.life - damage;
-      console.log("Nailed him!" + target.life);
-      console.log(target);
-      $('#output').text(this.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life");
+      if(target.life <= 0){
+        target.die()
+      }
+      else {
+        console.log("Nailed him!" + target.life);
+        console.log(target);
+
+        $('#output').text(this.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life");
+    }
     }
   };
   this.attackAll = function(targets){
@@ -66,11 +84,17 @@ var Player = function (options) {
       else {
         //successful hit
         console.log(target.life);
-        var damage = Math.round( ((instanceObject.physicalAttack/(enemies.length-dead.length))/target.physicalDefense)*10);
-      target.life = target.life - damage;
-      console.log("Nailed him!" + target.life);
-      console.log(target);
-      $('#output').text(instanceObject.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life.  ");
+        var damage = Math.round( ((instanceObject.physicalAttack/(targets.length))/target.physicalDefense)*10);
+        target.life = target.life - damage;
+        console.log("Nailed him!" + target.life);
+        console.log(target);
+        if(target.life <= 0){
+          target.die();
+        }
+        else {
+          $('#lifeStatus').text(target.life);
+          $('#output').text(instanceObject.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life.  ");
+        }
       }
     });
   };
@@ -79,7 +103,12 @@ var Player = function (options) {
   target.life = target.life - damage;
     console.log("Nailed him!" + target.life);
     console.log(target);
-    $('#output').text(this.name + " cast a spell on " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life. ");
+    if (target <= 0){
+      target.die();
+    }
+    else{
+      $('#output').text(this.name + " cast a spell on " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life. ");
+    }
   };
   this.castSpellAll = function(targets){
     var instanceObject = this;
@@ -88,7 +117,13 @@ var Player = function (options) {
   target.life = target.life - damage;
       console.log("Nailed him!" + target.life);
       console.log(target);
-      $('#output').text(instanceObject.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life.  ");
+      if(target.life <= 0){
+        target.die();
+
+      }
+      else{
+        $('#output').text(instanceObject.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life.  ");
+      }
     });
   };
 };
@@ -153,7 +188,10 @@ $('#openingScreen').fadeOut(500, function() {
             enemies.forEach(function(enemy){
               $('#badGuys').append(warriorGameTemplateRenderer(enemy));
             });
-            //alright, begin the gameplay with timing functions defined in helper methods....
+            $('#badGuys').find('.choices').remove();
+            //alright, begin the gameplay (LATER ON: with timing functions defined in helper methods....)
+
+
             $('.attackBtn').on('click', function(){
               //need to get the object for the character belonging to this button!
               var parent = $(this).parent();
@@ -188,9 +226,33 @@ $('#openingScreen').fadeOut(500, function() {
 
               currentCharacterObject.castSpellAll(enemies);
             });
-            // players.forEach(function(){
-            //
-            // });
+
+
+              enemies.forEach(function(enemy){
+                //test to see if enemy is alive..not working, they're still fighting from the grave - consult rubber duck for answers
+                if(enemy.isAlive){
+                  var timer = setInterval(function(){
+
+                    var randomAction = _.random(1,4);
+                    var randomTarget = _.random(0,(players.length-1));
+                    if (randomAction === 1){
+                      enemy.attack(players[randomTarget]);
+                    }
+                    else if (randomAction === 2){
+                      enemy.attackAll(players);
+                    }
+                    else if (randomAction === 3){
+                      enemy.castSpell(players[randomTarget]);
+                    }
+                    else{
+                    enemy.castSpellAll(players);
+                    }
+
+                }, 500000/enemy.speed)
+              }
+              });
+
+
 
         }).remove();
       }
@@ -223,9 +285,6 @@ var warriorTemplateRenderer = _.template(warriorTemplate);
 var warriorGameTemplate = $('#warriorGameTemplate').html();
 var warriorGameTemplateRenderer = _.template(warriorGameTemplate);
 
-//template for choice box
-var choiceBoxTemplate = $('#choiceBox').html();
-var choiceBoxTemplateRenderer = _.template(choiceBoxTemplate);
 
 //Create the new player and add to currentPlayers =========================================================
 
