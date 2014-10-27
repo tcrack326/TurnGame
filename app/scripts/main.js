@@ -3,14 +3,13 @@ $(document).ready(function () {
 var currentPlayers = [];
 var players = [];
 var enemies = [];
+//need to keep track of dead players for now
+var dead=[];
 
 //put 1 of 8 background pics for beginning screen
 var randomNumber = _.random(1,9).toString();
 
 $('#openingScreen').css("background-image","url(\"../images/backgrounds/fantasy-main-0"+randomNumber+".jpg\")");
-
-var randomNumber2 = _.random(1,9).toString();
-$('#startScreen').css("background-image","url(\"../images/backgrounds/fantasy-main-0"+randomNumber2+".jpg\")");
 
 //set up constructor(s) for game
 var Player = function (options) {
@@ -28,69 +27,180 @@ var Player = function (options) {
   this.speed = options.speed;
   this.castSpeed = options.castSpeed;
   this.luck = options.luck;
+  this.attack = function(target) {
+    //set up possible dodge
+    var odds = 600/ (target.luck + target.speed);
+    var random = _.random(1,odds);
+    if(random <= 2.5 ) {
+      //dodged it! nothing else happens (need to give output for dodge somehow)
+      console.log("dodged");
+      console.log(target);
+      $('#output').text(this.name + " attacked " + target.name + " but he dodged it!");
+    }
+
+    else {
+      //successful hit
+      console.log(target.life);
+      var damage = Math.round((this.physicalAttack / target.physicalDefense)*10);
+      target.life = target.life - damage;
+      console.log("Nailed him!" + target.life);
+      console.log(target);
+      $('#output').text(this.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life");
+    }
+  };
+  this.attackAll = function(targets){
+    //gotta copy attack function and modify damage due to attacking multiple targets
+    var instanceObject = this; //keep this in scope of the object function
+    targets.forEach(function(target){
+      //set up possible dodge
+      var odds = 600/ (target.luck + target.speed);
+      var random = _.random(1,odds);
+
+      if(random <= 2.5 ) {
+        //dodged it! nothing else happens (need to give output for dodge somehow)
+        console.log("dodged");
+        console.log(target);
+        $('#output').append(instanceObject.name + " attacked" + target.name + " but he dodged it! ");
+      }
+
+      else {
+        //successful hit
+        console.log(target.life);
+        var damage = Math.round( ((instanceObject.physicalAttack/(enemies.length-dead.length))/target.physicalDefense)*10);
+      target.life = target.life - damage;
+      console.log("Nailed him!" + target.life);
+      console.log(target);
+      $('#output').text(instanceObject.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life.  ");
+      }
+    });
+  };
+  this.castSpell = function(target){
+    var damage = Math.round((this.magicalAttack / target.magicalDefense)*10);
+  target.life = target.life - damage;
+    console.log("Nailed him!" + target.life);
+    console.log(target);
+    $('#output').text(this.name + " cast a spell on " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life. ");
+  };
+  this.castSpellAll = function(targets){
+    var instanceObject = this;
+    targets.forEach(function(target){
+    var damage = Math.round( ((instanceObject.magicalAttack/(enemies.length-dead.length))/target.magicalDefense)*10);
+  target.life = target.life - damage;
+      console.log("Nailed him!" + target.life);
+      console.log(target);
+      $('#output').text(instanceObject.name + " attacked " + target.name + " and diminished his life by " + damage + ". He now has " + target.life + " life.  ");
+    });
+  };
 };
 
 //Remove initial start screen and go to character creation scene
-$('#openingScreen').on('click', function () {
-  $('#openingScreen').fadeOut(1000,function(){
-    $('#openingScreen').remove();
+$('#openingScreen').click(function(){
+$('#openingScreen').fadeOut(500, function() {
+  $('.container').append(creationScreenTemplateRenderer());
+  //add logic for the opening screen in the template...================================
+  var randomNumber2 = _.random(1,9).toString();
+  $('#startScreen').css("background-image","url(\"../images/backgrounds/fantasy-main-0"+randomNumber2+".jpg\")");
+  currentPlayers.forEach(function(player){
+    $('#warriorList').append(warriorTemplateRenderer(player));
   });
-});
-
-
-//create player when clicked
-$('#createBtn').click( function() {
-  if($('#name').val() === "" || $('#userType').val() === "" || $('#userRace').val() === "" || $('#userGender').val() === ""){
-    alert("Enter all values for your new character");
-  }
-  else {
-  createPlayer();
-  //after creation get rid of the text in the inputs
-  $('#name').val('');
-  $('#userType').val('');
-  $('#userRace').val('');
-  $('#userGender').val('');
-}
-});
-
-//select a character to battle with ======================================
-$('#warriorList').on('click', ".character", function(){
-
-  var characterName = $(this).find("h3").text();
-  var selectedCharacter = _.findWhere(currentPlayers, {name: characterName});
-
-  if (_.contains(players,selectedCharacter)){
-    players = _.without(players, selectedCharacter);
-    $(this).css("border", "1px solid gray");
-  }
-  //stop adding after four players added
-  else if (players.length < 4){
-    players.push(selectedCharacter);
-    $(this).css("border", "2px solid black");
-  }
-});
-//========================================================================
-//click the button to start quest and move to the game screen
-
-  $('#beginQuest').click( function() {
-    if (players.length === 0){
-      alert("You must select at least one player to do battle!");
+  //create player when clicked
+  $('#createBtn').click( function() {
+    if($('#name').val() === "" || $('#userType').val() === "" || $('#userRace').val() === "" || $('#userGender').val() === ""){
+      alert("Enter all values for your new character");
     }
-
-    //Remove the start screen, add the game screen, start the game up, add the selected players and begin playing
     else {
-      $('#startScreen').fadeOut(500, function() {
-        $('.container').append(gameScreenTemplateRenderer());
+    createPlayer();
+    //after creation get rid of the text in the inputs
+    $('#name').val('');
+    $('#userType').val('');
+    $('#userRace').val('');
+    $('#userGender').val('');
+  }
+  });
 
-          players.forEach(function(player){
-            $('#goodGuys').append(warriorTemplateRenderer(player));
-          });
-          enemies.forEach(function(enemy){
-            $('#badGuys').append(warriorTemplateRenderer(enemy));
-          });
-      }).remove();
+  //select a character to battle with ======================================
+  $('#warriorList').on('click', ".character", function(){
+
+    var characterName = $(this).find("h3").text();
+    var selectedCharacter = _.findWhere(currentPlayers, {name: characterName});
+
+    if (_.contains(players,selectedCharacter)){
+      players = _.without(players, selectedCharacter);
+      $(this).css("border", "1px solid gray");
+    }
+    //stop adding after four players added
+    else if (players.length < 4){
+      players.push(selectedCharacter);
+      $(this).css("border", "2px solid white");
     }
   });
+  //========================================================================
+  //click the button to start quest and move to the game screen
+
+    $('#beginQuest').click( function() {
+      if (players.length === 0){
+        alert("You must select at least one player to do battle!");
+      }
+
+      //Remove the start screen, add the game screen, start the game up, add the selected players and begin playing
+      else {
+        $('#startScreen').fadeOut(500, function() {
+          $('.container').append(gameScreenTemplateRenderer());
+            $('#gameScreen').css("background-image","url(\"../images/backgrounds/fantasy-background_03-complete.png\")");
+            players.forEach(function(player){
+              $('#goodGuys').append(warriorGameTemplateRenderer(player));
+            });
+            enemies.forEach(function(enemy){
+              $('#badGuys').append(warriorGameTemplateRenderer(enemy));
+            });
+            //alright, begin the gameplay with timing functions defined in helper methods....
+            $('.attackBtn').on('click', function(){
+              //need to get the object for the character belonging to this button!
+              var parent = $(this).parent();
+              var character = parent[0].id;
+              var currentCharacterObject = _.findWhere(players, {name: character});
+              //let's set a random character to attack until figure out DOM selection
+              var randomTarget = _.random(0, (enemies.length - dead.length-1));
+              currentCharacterObject.attack(enemies[randomTarget]);
+            });
+            $('.attackAllBtn').on('click', function(){
+              //need to get the object for the character belonging to this button!
+              var parent = $(this).parent();
+              var character = parent[0].id;
+              var currentCharacterObject = _.findWhere(players, {name: character});
+
+              currentCharacterObject.attackAll(enemies);
+            });
+            $('.castSpellBtn').on('click', function(){
+              //need to get the object for the character belonging to this button!
+              var parent = $(this).parent();
+              var character = parent[0].id;
+              var currentCharacterObject = _.findWhere(players, {name: character});
+              //let's set a random character to attack until figure out DOM selection
+              var randomTarget = _.random(0, (enemies.length - dead.length-1));
+              currentCharacterObject.castSpell(enemies[randomTarget]);
+            });
+            $('.castSpellAllBtn').on('click', function(){
+              //need to get the object for the character belonging to this button!
+              var parent = $(this).parent();
+              var character = parent[0].id;
+              var currentCharacterObject = _.findWhere(players, {name: character});
+
+              currentCharacterObject.castSpellAll(enemies);
+            });
+            // players.forEach(function(){
+            //
+            // });
+
+        }).remove();
+      }
+    });
+
+  //=====================================================================================
+}).remove();
+});
+
+
 
 
 
@@ -98,8 +208,8 @@ $('#warriorList').on('click', ".character", function(){
 =============================================================================================*/
 
 //template for character selection/creation scene
-// var creationScreenTemplate = $('#characterCreationTemplate').html();
-// var creationScreenTemplateRenderer = _.template(creationScreenTemplate);
+var creationScreenTemplate = $('#characterCreationTemplate').html();
+var creationScreenTemplateRenderer = _.template(creationScreenTemplate);
 
 //create a template for the main game screen
 var gameScreenTemplate = $('#gameScreenTemplate').html();
@@ -108,6 +218,14 @@ var gameScreenTemplateRenderer = _.template(gameScreenTemplate);
 //create a template and add the current players to it
 var warriorTemplate = $('#warriorListTemplate').html();
 var warriorTemplateRenderer = _.template(warriorTemplate);
+
+//template for game time characters (image and names)
+var warriorGameTemplate = $('#warriorGameTemplate').html();
+var warriorGameTemplateRenderer = _.template(warriorGameTemplate);
+
+//template for choice box
+var choiceBoxTemplate = $('#choiceBox').html();
+var choiceBoxTemplateRenderer = _.template(choiceBoxTemplate);
 
 //Create the new player and add to currentPlayers =========================================================
 
@@ -470,7 +588,7 @@ else {
 }
 
 currentPlayers.push(newPlayer);
-$('#warriorList').append(warriorTemplateRenderer(newPlayer));
+$('#warriorList').prepend(warriorTemplateRenderer(newPlayer));
 
 };
 
@@ -569,6 +687,7 @@ var goblin1 = new Player({
   castSpeed: 15,
   luck: 10
 });
+
 var orc1 = new Player({
   name: "Morc the Orc",
   type: "Knight",
@@ -607,10 +726,17 @@ var troll1 = new Player({
 enemies.push(goblin1);
 enemies.push(orc1);
 enemies.push(troll1);
-
 /*====================================================================================
 ======================================================================================*/
-currentPlayers.forEach(function(player){
-  $('#warriorList').append(warriorTemplateRenderer(player));
-});
-});
+//some helper methods for gameplay, need to organize everything better...
+// function makeChoice(speed) {
+//   var intervalTime = setInterval(choose, 3000/speed);
+// };
+//
+// function choose(player) {
+//   $('#warriorGameTemplate').append(choiceBoxTemplateRenderer);
+//   $('#attackBtn').click()
+// };
+//
+//
+ });
