@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>TurnGame</title>
+    <title>Iron Yard Warriors</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
+    <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900' rel='stylesheet' type='text/css'>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
-    <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
@@ -28,7 +28,11 @@
         <h1>Iron Yard Warriors</h1>
         <span>Click the Screen To Begin Your Quest</span>
       </section>
-    <!--   <section id="startScreen">
+    </div>
+  <!-- ========================== Templates ===================================
+  ========================================================================= -->
+  <script id="characterCreationTemplate" type="text/template">
+    <section id="startScreen">
       <h2>Choose up to four existing Iron Yard Warriors or Forge your own to begin your Quest!</h2>
       <h3> Only Those Forged in the Fires of the Iron Yard shall Prevail!
       <div class="create">
@@ -67,51 +71,7 @@
       </div>
       <ul id="warriorList">
       </ul>
-    </section> -->
-    </div>
-  <!-- ========================== Templates ===================================
-  ========================================================================= -->
-  <script id="characterCreationTemplate" type="text/template">
-  <section id="startScreen">
-    <h2>Choose up to four existing Iron Yard Warriors or Forge your own to begin your Quest!</h2>
-    <h3> Only Those Forged in the Fires of the Iron Yard shall Prevail!
-    <div class="create">
-      <h3>Create an Iron Yard Warrior</h3>
-      <span>Enter your Warrior's Name</span>
-      <input id="name" type="text">
-
-      <span>Choose a Race</span>
-      <input id="userRace" list="race" autocomplete="on" autocorrect="on">
-        <datalist id="race">
-          <option value="Human">
-          <option value="Elf">
-          <option value="Dwarf">
-        </datalist>
-
-      <span>Choose a Class</span>
-      <input id="userType" list="type" autocomplete="on" autocorrect="on">
-        <datalist id="type">
-          <option value="Knight">
-          <option value="Ranger">
-          <option value="Thief">
-          <option value="Light Wizard">
-          <option value="Dark Wizard">
-          <option value="Rogue">
-        </datalist>
-      <span>Choose a Gender</span>
-      <input id="userGender" list="gender" autocomplete="on" autocorrect="on">
-      <datalist id="gender">
-        <option value="Male">
-        <option value="Female">
-      </datalist>
-      <br></br>
-      <div id="createBtn" class="button" name="createWarrior">Forge New Warrior</div>
-      <br></br>
-      <div id="beginQuest" class="button" name="BeginQuest">Begin My Quest!</div>
-    </div>
-    <ul id="warriorList">
-    </ul>
-  </section>
+    </section>
   </script>
 
   <script id="warriorListTemplate" type="text/template">
@@ -132,6 +92,7 @@
         </ul>
     </li>
   </script>
+
   <script id="gameScreenTemplate" type="text/template">
     <section id="gameScreen">
       <span id="output"></span>
@@ -173,7 +134,7 @@
     <!-- endbuild -->
 
         <!-- build:js scripts/main.js -->
-        <script src="scripts/defaultPlayers.js"></script>
+        <!-- <script src="scripts/defaultPlayers.js"></script> -->
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 </body>

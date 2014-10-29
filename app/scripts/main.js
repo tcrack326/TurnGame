@@ -56,7 +56,7 @@ var Player = function (options) {
       var damage = Math.round((this.physicalAttack / target.physicalDefense)*10);
       target.life = target.life - damage;
       if(target.life <= 0){
-        target.die()
+        target.die();
       }
       else {
         console.log("Nailed him!" + target.life);
@@ -248,7 +248,7 @@ $('#openingScreen').fadeOut(500, function() {
                     enemy.castSpellAll(players);
                     }
 
-                }, 500000/enemy.speed)
+                }, 500000/enemy.speed);
               }
               });
 
@@ -607,22 +607,22 @@ var randomCharacterNumber = _.random(1,5).toString();
 var avatarUrl = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "0" + randomCharacterNumber + ".png";
 
 var avatarUrl4 = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "04.png";
-;
+
 
 var avatarUrl3= "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "03.png";
-;
+
 
 var avatarUrl2 = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "02.png";
-;
+
 
 var avatarUrl1 = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "01.png";
-;
+
 
 //helper function to return existing image
 var imageExists = function(url){
    var img = new Image();
    img.src = url;
-   return img.height != 0;
+   return img.height !== 0;
 };
 
 //check to see if image exists and set one that does to the avatar....poor code for uneven amount of images...=(
@@ -787,15 +787,4 @@ enemies.push(orc1);
 enemies.push(troll1);
 /*====================================================================================
 ======================================================================================*/
-//some helper methods for gameplay, need to organize everything better...
-// function makeChoice(speed) {
-//   var intervalTime = setInterval(choose, 3000/speed);
-// };
-//
-// function choose(player) {
-//   $('#warriorGameTemplate').append(choiceBoxTemplateRenderer);
-//   $('#attackBtn').click()
-// };
-//
-//
  });
