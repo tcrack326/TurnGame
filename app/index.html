@@ -1,34 +1,36 @@
 <!doctype html>
 <html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>Iron Yard Warriors</title>
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
-    <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900' rel='stylesheet' type='text/css'>
-    <!-- endbower -->
-    <!-- endbuild -->
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <title>Iron Yard Warriors</title>
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css" />
+  <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900' rel='stylesheet' type='text/css'>
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- build:js scripts/vendor/modernizr.js -->
-    <script src="../bower_components/modernizr/modernizr.js"></script>
-    <!-- endbuild -->
-  </head>
-  <body>
-    <div class="container">
-      <section id="openingScreen">
-        <h1>Iron Yard Warriors</h1>
-        <span>Click the Screen To Begin Your Quest</span>
-      </section>
-    </div>
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+
+  <!-- build:js scripts/vendor/modernizr.js -->
+  <script src="../bower_components/modernizr/modernizr.js"></script>
+  <!-- endbuild -->
+</head>
+
+<body>
+  <div class="container">
+    <section id="openingScreen">
+      <h1>Iron Yard Warriors</h1>
+      <span>Click the Screen To Begin Your Quest</span>
+    </section>
+  </div>
   <!-- ========================== Templates ===================================
   ========================================================================= -->
   <script id="characterCreationTemplate" type="text/template">
@@ -37,37 +39,37 @@
       <h3> Only Those Forged in the Fires of the Iron Yard shall Prevail!
       <div class="create">
         <h3>Create an Iron Yard Warrior</h3>
-        <span>Enter your Warrior's Name</span>
-        <input id="name" type="text">
+      <span>Enter your Warrior's Name</span>
+      <input id="name" type="text">
 
-        <span>Choose a Race</span>
-        <input id="userRace" list="race" autocomplete="on" autocorrect="on">
-          <datalist id="race">
-            <option value="Human">
-            <option value="Elf">
+      <span>Choose a Race</span>
+      <input id="userRace" list="race" autocomplete="on" autocorrect="on">
+      <datalist id="race">
+        <option value="Human">
+          <option value="Elf">
             <option value="Dwarf">
-          </datalist>
+      </datalist>
 
-        <span>Choose a Class</span>
-        <input id="userType" list="type" autocomplete="on" autocorrect="on">
-          <datalist id="type">
-            <option value="Knight">
-            <option value="Ranger">
+      <span>Choose a Class</span>
+      <input id="userType" list="type" autocomplete="on" autocorrect="on">
+      <datalist id="type">
+        <option value="Knight">
+          <option value="Ranger">
             <option value="Thief">
-            <option value="Light Wizard">
-            <option value="Dark Wizard">
-            <option value="Rogue">
-          </datalist>
-        <span>Choose a Gender</span>
-        <input id="userGender" list="gender" autocomplete="on" autocorrect="on">
-        <datalist id="gender">
-          <option value="Male">
+              <option value="Light Wizard">
+                <option value="Dark Wizard">
+                  <option value="Rogue">
+      </datalist>
+      <span>Choose a Gender</span>
+      <input id="userGender" list="gender" autocomplete="on" autocorrect="on">
+      <datalist id="gender">
+        <option value="Male">
           <option value="Female">
-        </datalist>
-        <br></br>
-        <div id="createBtn" class="button" name="createWarrior">Forge New Warrior</div>
-        <br></br>
-        <div id="beginQuest" class="button" name="BeginQuest">Begin My Quest!</div>
+      </datalist>
+      <br></br>
+      <div id="createBtn" class="button" name="createWarrior">Forge New Warrior</div>
+      <br></br>
+      <div id="beginQuest" class="button" name="BeginQuest">Begin My Quest!</div>
       </div>
       <ul id="warriorList">
       </ul>
@@ -76,20 +78,38 @@
 
   <script id="warriorListTemplate" type="text/template">
     <li class="character">
-        <img src="<%= avatarUrl %>">
-        <h3><%= name %></h3>
-        <h4><%= race %> <%= type %></h4>
-        <ul>
-          <li>Life: <%= life %></li>
-          <li>Magic: <%= magic %></li>
-          <li>Strength: <%= physicalAttack %></li>
-          <li>Defense: <%= physicalDefense %></li>
-          <li>Magic Strength: <%= magicalAttack %></li>
-          <li>Magic Defense: <%= magicalDefense %></li>
-          <li>Speed: <%= speed %></li>
-          <li>Spell Cast Speed: <%= castSpeed %></li>
-          <li>Luck: <%= luck %></li>
-        </ul>
+      <img src="<%= avatarUrl %>">
+      <h3><%= name %></h3>
+      <h4><%= race %> <%= type %></h4>
+      <ul>
+        <li>Life:
+          <%= life %>
+        </li>
+        <li>Magic:
+          <%= magic %>
+        </li>
+        <li>Strength:
+          <%= physicalAttack %>
+        </li>
+        <li>Defense:
+          <%= physicalDefense %>
+        </li>
+        <li>Magic Strength:
+          <%= magicalAttack %>
+        </li>
+        <li>Magic Defense:
+          <%= magicalDefense %>
+        </li>
+        <li>Speed:
+          <%= speed %>
+        </li>
+        <li>Spell Cast Speed:
+          <%= castSpeed %>
+        </li>
+        <li>Luck:
+          <%= luck %>
+        </li>
+      </ul>
     </li>
   </script>
 
@@ -102,23 +122,23 @@
       </ul>
     </section>
   </script>
-  <script id="warriorGameTemplate" type="text/template">
-    <li class="characterGame" id="<%= name %><%= type %>">
-        <img src="<%= avatarUrl %>">
-        <h3><%= name %></h3>
+<script id="warriorGameTemplate" type="text/template">
+  <li class="characterGame" id="<%= name %><%= type %>">
+    <img src="<%= avatarUrl %>">
+    <h3><%= name %></h3>
     <div class="choices">
-      <ul id= "<%= name %>">
+      <ul id="<%= name %>">
         <li class="attackBtn">Attack</li>
         <li class="attackAllBtn">Attack All</li>
         <li class="castSpellBtn">Cast Spell</li>
         <li class="castSpellAllBtn">Cast Spell All</li>
       </ul>
     </div>
-    </li>
-  </script>
+  </li>
+</script>
   <script id="choiceBox" type="text/template">
     <div class="choices">
-      <ul id= "<%= name %>">
+      <ul id="<%= name %>">
         <li class="attackBtn">Attack</li>
         <li class="attackAllBtn">Attack All</li>
         <li class="castSpellBtn">Cast Spell</li>
@@ -126,16 +146,17 @@
       </ul>
     </div>
   </script>
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/underscore/underscore.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/underscore/underscore.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
 
-        <!-- build:js scripts/main.js -->
-        <!-- <script src="scripts/defaultPlayers.js"></script> -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+  <!-- build:js scripts/main.js -->
+  <!-- <script src="scripts/defaultPlayers.js"></script> -->
+  <script src="scripts/main.js"></script>
+  <!-- endbuild -->
 </body>
+
 </html>
