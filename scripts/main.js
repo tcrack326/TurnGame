@@ -43,7 +43,7 @@ var dead=[];
 //put 1 of 8 background pics for beginning screen
 var randomNumber = _.random(1,9).toString();
 
-$('#openingScreen').css("background-image","url(\"../images/backgrounds/fantasy-main-0"+randomNumber+".jpg\")");
+$('#openingScreen').css("background-image","url(\"images/backgrounds/fantasy-main-0"+randomNumber+".jpg\")");
 
 //set up constructor(s) for game
 var Player = function (options) {
@@ -168,7 +168,7 @@ $('#openingScreen').fadeOut(500, function() {
   $('.container').append(creationScreenTemplateRenderer());
   //add logic for the opening screen in the template...================================
   var randomNumber2 = _.random(1,9).toString();
-  $('#startScreen').css("background-image","url(\"../images/backgrounds/fantasy-main-0"+randomNumber2+".jpg\")");
+  $('#startScreen').css("background-image","url(\"images/backgrounds/fantasy-main-0"+randomNumber2+".jpg\")");
   currentPlayers.forEach(function(player){
     $('#warriorList').append(warriorTemplateRenderer(player));
   });
@@ -215,7 +215,7 @@ $('#openingScreen').fadeOut(500, function() {
       else {
         $('#startScreen').fadeOut(500, function() {
           $('.container').append(gameScreenTemplateRenderer());
-            $('#gameScreen').css("background-image","url(\"../images/backgrounds/fantasy-background_03-complete.png\")");
+            $('#gameScreen').css("background-image","url(\"images/backgrounds/fantasy-background_03-complete.png\")");
             players.forEach(function(player){
               $('#goodGuys').append(warriorGameTemplateRenderer(player));
             });
@@ -638,18 +638,18 @@ else {
 var randomCharacterNumber = _.random(1,5).toString();
 
 //check to see if avatar url exists with random number to 5, if not, return one that exists
-var avatarUrl = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "0" + randomCharacterNumber + ".png";
+var avatarUrl = "images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "0" + randomCharacterNumber + ".png";
 
-var avatarUrl4 = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "04.png";
-
-
-var avatarUrl3= "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "03.png";
+var avatarUrl4 = "images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "04.png";
 
 
-var avatarUrl2 = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "02.png";
+var avatarUrl3= "images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "03.png";
 
 
-var avatarUrl1 = "../images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "01.png";
+var avatarUrl2 = "images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "02.png";
+
+
+var avatarUrl1 = "images/heroes/" + userType + "-" + userRace + "-" + userGender + "-" + "01.png";
 
 
 //helper function to return existing image
@@ -694,7 +694,7 @@ var defaultKnight = new Player({
   type: "Knight",
   race: "Human",
   gender: "Male",
-  avatarUrl: "../images/heroes/Knight-Human-Male-01.png",
+  avatarUrl: "images/heroes/Knight-Human-Male-01.png",
   life: 80,
   magic: 20,
   physicalAttack: 60,
@@ -711,7 +711,7 @@ var defaultLightWizard = new Player({
   type: "Light Wizard",
   race: "Elf",
   gender: "Female",
-  avatarUrl: "../images/heroes/Light Wizard-Elf-Female-02.png",
+  avatarUrl: "images/heroes/Light Wizard-Elf-Female-02.png",
   life: 100,
   magic: 100,
   physicalAttack: 10,
@@ -728,7 +728,7 @@ var defaultDwarfDarkWizard = new Player({
   type: "Dark Wizard",
   race: "Dwarf",
   gender: "Male",
-  avatarUrl: "../images/heroes/Dark Wizard-Dwarf-Male-02.png",
+  avatarUrl: "images/heroes/Dark Wizard-Dwarf-Male-02.png",
   life: 90,
   magic: 90,
   physicalAttack: 10,
@@ -745,7 +745,7 @@ var defaultThief = new Player({
   type: "Thief",
   race: "Human",
   gender: "Female",
-  avatarUrl: "../images/heroes/Thief-Human-Female-04.png",
+  avatarUrl: "images/heroes/Thief-Human-Female-04.png",
   life: 75,
   magic: 30,
   physicalAttack: 40,
@@ -769,7 +769,7 @@ var goblin1 = new Player({
   type: "Fighter",
   race: "Goblin",
   gender: "Male",
-  avatarUrl: "../images/monsters/goblin-01.png",
+  avatarUrl: "images/monsters/goblin-01.png",
   life: 30,
   magic: 30,
   physicalAttack: 30,
@@ -786,7 +786,7 @@ var orc1 = new Player({
   type: "Knight",
   race: "Orc",
   gender: "?",
-  avatarUrl: "../images/monsters/orc-02.png",
+  avatarUrl: "images/monsters/orc-02.png",
   life: 50,
   magic: 10,
   physicalAttack: 40,
@@ -803,7 +803,7 @@ var troll1 = new Player({
   type: "Brawler",
   race: "Troll",
   gender: "?",
-  avatarUrl: "../images/monsters/troll-01.png",
+  avatarUrl: "images/monsters/troll-01.png",
   life: 80,
   magic: 10,
   physicalAttack: 10,
