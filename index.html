@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <title>Iron Yard Warriors</title>
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <link rel="stylesheet" href="styles/vendor.css">
+  <link rel = "stylesheet" href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900'>
+
+  <link rel="stylesheet" href="styles/main.css">
+
+  <script src="scripts/vendor/modernizr.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <section id="openingScreen">
+      <h1>Iron Yard Warriors</h1>
+      <span>Click the Screen To Begin Your Quest</span>
+    </section>
+  </div>
+
+  <script id="characterCreationTemplate" type="text/template">
+    <section id="startScreen">
+      <h2>Choose up to four existing Iron Yard Warriors or Forge your own to begin your Quest!</h2>
+      <h3> Only Those Forged in the Fires of the Iron Yard shall Prevail! </h3>
+      <div class="create">
+        <h3>Create an Iron Yard Warrior</h3>
+      <span>Enter your Warrior's Name</span>
+      <input id="name" type="text"/>
+
+      <span>Choose a Race</span>
+      <input id="userRace" list="race" autocomplete="on" autocorrect="on"/>
+      <datalist id="race">
+        <option value="Human">
+          <option value="Elf">
+            <option value="Dwarf">
+      </datalist>
+
+      <span>Choose a Class</span>
+      <input id="userType" list="type" autocomplete="on" autocorrect="on"/>
+      <datalist id="type">
+        <option value="Knight">
+          <option value="Ranger">
+            <option value="Thief">
+              <option value="Light Wizard">
+                <option value="Dark Wizard">
+                  <option value="Rogue">
+      </datalist>
+      <span>Choose a Gender</span>
+      <input id="userGender" list="gender" autocomplete="on" autocorrect="on"/>
+      <datalist id="gender">
+        <option value="Male">
+          <option value="Female">
+      </datalist>
+      <br></br>
+      <div id="createBtn" class="button" name="createWarrior">Forge New Warrior</div>
+      <br>
+      <div id="beginQuest" class="button" name="BeginQuest">Begin My Quest!</div>
+      </div>
+      <ul id="warriorList">
+      </ul>
+    </section>
+  </script>
+
+  <script id="warriorListTemplate" type="text/template">
+    <li class="character">
+      <img src="<%= avatarUrl %>">
+      <h3><%= name %></h3>
+      <h4><%= race %> <%= type %></h4>
+      <ul>
+        <li>Life:
+          <%= life %>
+        </li>
+        <li>Magic:
+          <%= magic %>
+        </li>
+        <li>Strength:
+          <%= physicalAttack %>
+        </li>
+        <li>Defense:
+          <%= physicalDefense %>
+        </li>
+        <li>Magic Strength:
+          <%= magicalAttack %>
+        </li>
+        <li>Magic Defense:
+          <%= magicalDefense %>
+        </li>
+        <li>Speed:
+          <%= speed %>
+        </li>
+        <li>Spell Cast Speed:
+          <%= castSpeed %>
+        </li>
+        <li>Luck:
+          <%= luck %>
+        </li>
+      </ul>
+    </li>
+  </script>
+
+  <script id="gameScreenTemplate" type="text/template">
+    <section id="gameScreen">
+      <span id="output"></span>
+      <ul id="goodGuys">
+      </ul>
+      <ul id="badGuys">
+      </ul>
+    </section>
+  </script>
+  <script id="warriorGameTemplate" type="text/template">
+    <li class="characterGame" id="<%= name %><%= type %>">
+      <img src="<%= avatarUrl %>">
+      <h3><%= name %></h3>
+      <div class="choices">
+        <ul id="<%= name %>">
+          <li class="attackBtn">Attack</li>
+          <li class="attackAllBtn">Attack All</li>
+          <li class="castSpellBtn">Cast Spell</li>
+          <li class="castSpellAllBtn">Cast Spell All</li>
+        </ul>
+      </div>
+    </li>
+  </script>
+  <script id="choiceBox" type="text/template">
+    <div class="choices">
+      <ul id="<%= name %>">
+        <li class="attackBtn">Attack</li>
+        <li class="attackAllBtn">Attack All</li>
+        <li class="castSpellBtn">Cast Spell</li>
+        <li class="castSpellAllBtn">Cast Spell All</li>
+      </ul>
+    </div>
+  </script>
+  <script src="scripts/vendor.js"></script>
+
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>
